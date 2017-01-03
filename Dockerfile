@@ -1,9 +1,9 @@
-FROM nimmis/java:openjdk-8-jdk
+FROM nimmis/alpine-java
 
 MAINTAINER nimmis <kjell.havneskold@gmail.com>
 
 #default directory for SPIGOT-server
-ENV SPIGOT_HOME /minecraft
+ENV SPIGOT_HOME /tmp/spigot
 
 #default version 
 ENV SPIGOT_VER latest

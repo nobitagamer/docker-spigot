@@ -23,6 +23,10 @@ MC_USER=minecraft       # User name running the minecraft server
 MC_PROC=spigot.jar   # name of minecraft jar file
 MC_DIR=/minecraft/ # Directory where the server should run
 
+if [ -z "$SPIGOT_HOME" ]; then
+  SPIGOT_HOME="/tmp/spigot"
+fi
+
 if [ -z "$MC_MAXMEM" ]; then
   MC_MAXMEM="1G"
 fi
@@ -126,7 +130,7 @@ setProp() {
 #
 # send a command to the running minecraft server
 sendCMD() {
-  echo $1 >> $MC_DIR/input.con
+  echo $1 >> $SPIGOT_HOME/input.con
 }
 
 #
@@ -226,29 +230,29 @@ buildjar() {
 
 ResetConsoleFiles() {
 
-	rm -f $MC_DIR/input.con
-	rm -f $MC_DIR/output.con
+	rm -f $SPIGOT_HOME/input.con
+	rm -f $SPIGOT_HOME/output.con
 	
-	if [ -f $MC_DIR/input.con ]; then
-		echo "$MC_DIR/input.con could not be removed"
+	if [ -f $SPIGOT_HOME/input.con ]; then
+		echo "$SPIGOT_HOME/input.con could not be removed"
 		exit 1
 	fi
 
-       	if [ -f $MC_DIR/output.con ]; then
-                echo "$MC_DIR/output.con could not be removed"
+       	if [ -f $SPIGOT_HOME/output.con ]; then
+                echo "$SPIGOT_HOME/output.con could not be removed"
                 exit 1
         fi
 
-	execCMD "touch $MC_DIR/input.con"
-	execCMD "touch $MC_DIR/output.con"
+	execCMD "touch $SPIGOT_HOME/input.con"
+	execCMD "touch $SPIGOT_HOME/output.con"
 
-	if [ ! -f $MC_DIR/input.con ]; then
-		echo "$MC_DIR/input.con could not be created by $MC_USER"
+	if [ ! -f $SPIGOT_HOME/input.con ]; then
+		echo "$SPIGOT_HOME/input.con could not be created by $MC_USER"
 		exit 1
 	fi
 
-        if [ ! -f $MC_DIR/output.con ]; then
-                echo "$MC_DIR/output.con could not be created by $MC_USER"
+        if [ ! -f $SPIGOT_HOME/output.con ]; then
+                echo "$SPIGOT_HOME/output.con could not be created by $MC_USER"
                 exit 1
         fi
 
@@ -270,7 +274,7 @@ start() {
    # be in right working directory when starting 
    cd $MC_DIR
 
-   execCMD "tail -f --pid=\$$ $MC_DIR/input.con | { $JAVACMD $MC_JAVA_OPS -jar $MC_DIR/$MC_PROC nogui > $MC_DIR/output.con 2>&1 ; kill \$$ ; } " &
+   execCMD "tail -f --pid=\$$ $SPIGOT_HOME/input.con | { $JAVACMD $MC_JAVA_OPS -jar $MC_DIR/$MC_PROC nogui > $SPIGOT_HOME/output.con 2>&1 ; kill \$$ ; } " &
 
    # check if the command wait OK
 
@@ -394,7 +398,7 @@ case "$1" in
 
   log)
      echo "Abort with CTRL-C"
-     tail -f $MC_DIR/output.con
+     tail -f $SPIGOT_HOME/output.con
   ;;
 
   console)
