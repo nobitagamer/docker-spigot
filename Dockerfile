@@ -8,6 +8,9 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 #default directory for SPIGOT-server
 ENV SPIGOT_HOME /tmp/spigot
 
+# Directory where the server should run
+ENV MC_DIR /minecraft/
+
 #default version 
 ENV SPIGOT_VER latest
 
