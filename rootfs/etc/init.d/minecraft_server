@@ -216,8 +216,8 @@ buildjar() {
     cd /$SPIGOT_HOME/
     rm -Rf /$SPIGOT_HOME/build
   fi
-  execCMD "rm -f /$SPIGOT_HOME/spigot.jar"
-  execCMD "ln -s /$SPIGOT_HOME/spigot-$1.jar /$SPIGOT_HOME/spigot.jar"
+  execCMD "rm -f /$MC_DIR/spigot.jar"
+  execCMD "cp /$SPIGOT_HOME/spigot-$1.jar /$MC_DIR/spigot.jar"
 }
 	
 #
