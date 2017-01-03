@@ -1,9 +1,6 @@
-FROM nimmis/ubuntu
+FROM nimmis/alpine-java
 
 MAINTAINER nimmis <kjell.havneskold@gmail.com>
-
-# set default java environment variable
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
 #default directory for SPIGOT-server
 ENV SPIGOT_HOME /tmp/spigot
@@ -15,12 +12,9 @@ ENV SPIGOT_VER latest
 COPY rootfs /
 
 # add some needed commands 
-RUN apt-get install -y software-properties-common && \
-	add-apt-repository ppa:openjdk-r/ppa -y && \
-	apt-get update && \
-	apt-get install -y --no-install-recommends openjdk-8-jre wget git && \
-	rm -rf /var/lib/apt/lists/* && \
-	apt-get clean all
+RUN apk update && apk upgrade && \
+    apk add wget git && \
+	rm -rf /tmp/tmprt /var/cache/apk/*
 
 # Make special user for minecraft to run in
 
