@@ -219,6 +219,7 @@ buildjar() {
     cp /$SPIGOT_HOME/build/Spigot/Spigot-Server/target/spigot-*.jar /$SPIGOT_HOME/spigot-$1.jar
     cd /$SPIGOT_HOME/
     rm -Rf /$SPIGOT_HOME/build
+	chown $MC_USER -R /$SPIGOT_HOME
   fi
   execCMD "rm -f /$MC_DIR/spigot.jar"
   execCMD "cp /$SPIGOT_HOME/spigot-$1.jar /$MC_DIR/spigot.jar"
